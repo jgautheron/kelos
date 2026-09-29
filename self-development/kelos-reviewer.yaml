@@ -168,6 +168,12 @@ spec:
         (e.g., unauthenticated requests, nil/empty returns that mask the
         failure)? Flag silent degradation as P1 — operators should see the
         error, not discover it later from confusing symptoms.
+      - Conversely, can a failure in a best-effort enhancement (an added
+        lookup, a Git inspection behind an optional view, a heartbeat or
+        lease refresh) abort startup, tear down a healthy connection, or
+        discard a primary result that would otherwise succeed? Require
+        degrading only that enhancement with a logged, visible diagnostic
+        and a later retry. P2.
       - For setup or install scripts with required outputs, does success prove
         the expected artifacts exist rather than only that a command exited
         zero or a directory exists? When directory contents are relocated,
