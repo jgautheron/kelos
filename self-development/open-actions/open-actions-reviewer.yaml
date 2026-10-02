@@ -172,6 +172,15 @@ spec:
         failure)? Flag silent degradation as P1 — operators should see the
         error, not discover it later from confusing symptoms.
 
+      **Controller efficiency**:
+      - Flag uncached (`APIReader`) or external reads in watch map functions,
+        event handlers, and predicates. Informers deliver a create event for
+        every retained object on each controller start, so a per-event list
+        can exhaust the cache-sync deadline and block startup. Report it as a
+        finding, not an optional suggestion: P1 when it runs for initial-list
+        create events of a resource that accumulates, such as retained
+        WorkflowRuns or WorkflowJobs; P2 otherwise.
+
       **GitHub Actions compatibility**:
       - For changes that touch workflow syntax or execution, read the relevant
         official GitHub Actions documentation and compare the implementation's
